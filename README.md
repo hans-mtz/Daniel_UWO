@@ -1,2 +1,2 @@
-# Daniel_V_UWO
+# Daniel UWO
 Summer 2021
