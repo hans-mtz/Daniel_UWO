@@ -1,8 +1,8 @@
 # Set up ----
 ## Load libraries #####
-library(readr)
-library(lubridate)
-library(tidyverse)
+# library(readr)
+# library(lubridate)
+# library(tidyverse)
 
 ## setting up directories ----
 
@@ -17,7 +17,7 @@ prices <- read_csv(paste0(data_dir,"PriceData.csv"),
 prices$month <- ym(prices$month) # Getting months in right format
 
 w_p <- prices %>%
-  filter(month >= "2010-01-01", month<= "2016-12-01") # Filtering for period
+  filter(month >= "2010-01-01", month<= "2017-12-01") # Filtering for period
 
 # Creating simplified distributor id
 w_p <- w_p %>% mutate(id_x=case_when(dist_id==40 ~  'Cosan', #
@@ -78,9 +78,9 @@ w_p <- w_p %>% group_by(month, state, mun, brand_x) %>%
 
 # Municipalities with same name in different states
 # Need to use mun+state
-data <- read_csv(paste0(data_dir,"SellDistMun.csv"))
+# data <- read_csv(paste0(data_dir,"SellDistMun.csv"))
 # transforming strings to dates
-data$month<- ym(data$month)
+# data$month<- ym(data$month)
 q_d <- data %>% mutate(dist=case_when(dist_id==40 ~  'Cosan', #
                                       dist_id==192 ~ 'Shell', #
                                       dist_id==172 ~ 'Raizen', #
@@ -140,7 +140,6 @@ q_d <- q_d %>% group_by(state, mun, cod_mun, month, dist, prod) %>%
 #before widening, remove unnecessary vars, save with other name,
 # left join with vars of interests
 q_d <- q_d %>%
-  select(-other_n) %>%
   pivot_wider(names_from = prod,
               values_from = tot_v,
               values_fill = 0,

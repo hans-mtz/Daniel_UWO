@@ -1,7 +1,7 @@
-# Set up ----
-## Load libraries #####
-source("tab.R")
-library(readxl)
+# # Set up ----
+# ## Load libraries #####
+# source("tab.R")
+# library(readxl)
 ## Reading data ----
 pop05_19 <- read_excel(paste0(data_dir,"Mun_Pop_2005to2019.xls"))
 pop10 <- read_excel(paste0(data_dir,"Mun_Pop_2010.xls"))
@@ -40,7 +40,7 @@ pop_tab <- pop_tab %>% pivot_wider(names_from = before_merge, values_from = pop)
 # Use this if running everything from zero. Uncomment and use previous if working
 # from population.
 
-ft <- table %>% rbind(pop_tab) %>% arrange(Variables, group) %>%
+table <- table %>% rbind(pop_tab) %>% arrange(Variables, group) %>%
   mutate(Difference=After-Before, Perc_change=(Difference/Before)*100) %>%
   select(group, Variables, Before, After, Difference, Perc_change)
 

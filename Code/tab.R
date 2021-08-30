@@ -1,5 +1,9 @@
+# Before running this code, run the following if they have not been run:
+# source('mmm.R')
+# source('graphs.R')
 
-source('graphs.R')
+source('prices.R')
+
 # prices before and after the merge ####
 
 price_tab <- w_p %>% ungroup() %>%
@@ -58,3 +62,11 @@ table <- price_tab %>% left_join(hhi_tab) %>%
   pivot_wider(names_from = c(before_merge),
               values_from = value)
 
+# # Exporting table ----
+#
+# write.csv(table, file=here('Output','table.csv'), fileEncoding = 'macintosh')
+
+# Cleaning ----
+
+# rm(prices, w_p, q_d, hhi)
+# rm(list = grep("_tab", ls(),value = T))

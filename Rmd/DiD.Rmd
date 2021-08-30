@@ -1,0 +1,91 @@
+---
+title: "DiD"
+author: "Hans Martinez"
+date: '`r format(Sys.time(),"%d %b, %Y")`'
+output: 
+  pdf_document:
+    extra_dependencies: tabularx, booktabs, footnote, bbm
+    keep_tex: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+load("DID.Rdata")
+library(fixest)
+myD= c("retail_p_gas"="Gas retail price",
+       "retail_p_eth"="Ethanol retail price",
+       "ws_p_gas"="Gas wholesale price",
+       "ws_p_eth"="Ethanol wholesale price",
+       "No_st_total"="Total number of stations",
+       "Dist_No_main"="Number of main distributors",
+       "Dist_No_other"="Number of other distributors",
+       "Ind_st_sh"="Share of independent stations",
+       "Vol_tot"="Total volume",
+       "Vol_gas"="Gas volume",
+       "Vol_eth"="Ethanol volume",
+       "Vol_dies"="Diesel volume",
+       "Fleet_tot"="Total fleet",
+       "population"="Population",
+       "gdp_pc"="GDP per capita",
+       "hhi"="HHI",
+       "merge"="Merge",
+       "group::Both"="Both",
+       "group::Just_one"="Just one",
+       "log(retail_p_gas)"="$ln$(Gas retail price)",
+       "log(retail_p_eth)"="$ln$(Ethanol retail price)",
+       "log(ws_p_gas)"="$ln$(Gas wholesale price)",
+       "log(ws_p_eth)"="$ln$(Ethanol wholesale price)")
+```
+
+## Diff-in-Diff
+
+\begin{equation}
+  Y_{it}=\beta_0 Treatment_{it}*Merge_{it} + \beta_1 Treatment_{it} + \beta_2 Merge_{it} + \beta_3 X_{it} + \varepsilon_{it}
+\end{equation}
+
+where $i$ stands for municipality and $t$ for month. $Y_{it}$ is one of the outcome variables of interest. $Treatment_{it}$ is a dummy variable equal to one if the municipality is in the treatment group and zero if it is in the control group. Likewise, $Merge_{it}$ is a dummy variable that is equal to one if the month is greater than February 2011, the date of the merge between Shell and Cosan. Finally, $X_{it}$ is a vector of control variables.
+
+### Both as treatment, Just One and None as control
+
+```{r did, results='asis', echo=FALSE}
+etable(did_b[c(1:5)], tex = T, dict = myD)
+
+for (i in 1:54){
+  if(i %% 5){
+    next
+  }
+  
+  etable(did_b[(i+1):(i+5)], tex = T, dict = myD)
+  cat("\n")
+}
+```
+
+### Both as treatment, None as control
+
+```{r did_bn, results='asis', echo=FALSE}
+etable(did_bn[c(1:5)], tex = T, dict = myD)
+
+for (i in 1:54){
+  if(i %% 5){
+    next
+  }
+  
+  etable(did_bn[(i+1):(i+5)], tex = T, dict = myD)
+  cat("\n")
+}
+```
+
+### Just One as treatment, None as control
+
+```{r did_jn, results='asis', echo=FALSE}
+etable(did_jn[c(1:5)], tex = T, dict = myD)
+
+for (i in 1:54){
+  if(i %% 5){
+    next
+  }
+  
+  etable(did_jn[(i+1):(i+5)], tex = T, dict = myD)
+  cat("\n")
+}
+```

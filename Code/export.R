@@ -27,3 +27,7 @@ write.csv(table, file='table.csv', fileEncoding = 'macintosh')
 # Final table ####
 source('pop.R')
 write.csv(ft, file=paste0(data_dir,'table.csv'), fileEncoding = 'macintosh')
+
+# Final table ####
+source('gdp.R')
+write.csv(ft, file=paste0(data_dir,'table.csv'), fileEncoding = 'macintosh')

@@ -1,0 +1,105 @@
+---
+title: "DiD TWFE"
+author: "Hans Martinez"
+date: '`r format(Sys.time(),"%d %b, %Y")`'
+output: 
+  pdf_document:
+    extra_dependencies: tabularx, booktabs, footnote, bbm
+    keep_tex: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+load("DID_twfe.Rdata")
+library(fixest)
+myD= c("retail_p_gas"="Gas retail price",
+       "retail_p_eth"="Ethanol retail price",
+       "ws_p_gas"="Gas wholesale price",
+       "ws_p_eth"="Ethanol wholesale price",
+       "No_st_total"="Total number of stations",
+       "Dist_No_main"="Number of main distributors",
+       "Dist_No_other"="Number of other distributors",
+       "Ind_st_sh"="Share of independent stations",
+       "Vol_tot"="Total volume",
+       "Vol_gas"="Gas volume",
+       "Vol_eth"="Ethanol volume",
+       "Vol_dies"="Diesel volume",
+       "Fleet_tot"="Total fleet",
+       "population"="Population",
+       "gdp_pc"="GDP per capita",
+       "hhi"="HHI",
+       "merge"="Merge",
+       "group::Both"="Both",
+       "group::Just_one"="Just one",
+       "log(retail_p_gas)"="$ln$(Gas retail price)",
+       "log(retail_p_eth)"="$ln$(Ethanol retail price)",
+       "log(ws_p_gas)"="$ln$(Gas wholesale price)",
+       "log(ws_p_eth)"="$ln$(Ethanol wholesale price)",
+       "mun"="Municipality",
+       "month"="Month-Year",
+       "log(Vol_tot)"="$ln$(Total volume)",
+       "log(Vol_gas)"="$ln$(Gas volume)",
+       "log(Vol_eth)"="$ln$(Ethanol volume)",
+       "log(Vol_dies)"="$ln$(Diesel volume)",
+       "log(No_st_total)"="$ln$(Total number of stations)",
+       "log(No_st_Unbranded)"="$ln$(Number of independent stations)")
+```
+
+# Diff-in-Diff two way fixed effects (TWFE)
+
+\begin{equation}
+  Y_{it}=\beta_{0}(Treatment_{it}*Merge_{it}) + \beta_1 X_{it} + \alpha_{i} + \gamma_{t}  + \varepsilon_{it}
+\end{equation}
+
+where $i$ stands for municipality and $t$ for month. $Y_{it}$ is one of the outcome variables of interest. $Treatment_{it}$ is a dummy variable equal to one if the municipality is in the treatment group and zero if it is in the control group. Likewise, $Merge_{it}$ is a dummy variable that is equal to one if the month is greater than February 2011, the date of the merge between Shell and Cosan. $\alpha_i$ and $\gamma_t$ are municipality and month-year fixed effects, respectively. Finally, $X_{it}$ is a vector of control variables.
+
+# Both as treatment, Just One and None as control
+
+```{r did_twfe, results='asis', echo=FALSE}
+
+for (i in seq(1,length(did_twfe_b),by=6)){
+  etable(did_twfe_b[i:(i+5)], tex = T, dict = myD, 
+         group = list("Both $\\times$ Time FE"="Month"))
+  cat("\n")
+  plot(fixef(did_twfe_b[[(i+5)]])[[2]], ylab = "", 
+       main = paste0("Month-Year FE : ",did_twfe_b[[(i+5)]]$fml[2]), 
+     xaxt="n", xlab = "")
+  axis(1, at=seq(1,96,by=14),
+     labels = names(fixef(did_twfe_b[[1]])[[2]][seq(1,96,by=14)]))
+  abline(v=15, col="blue", lty=2, lwd=3)
+}
+```
+
+# Both as treatment, None as control
+
+```{r did_twfe_bn, results='asis', echo=FALSE}
+
+for (i in seq(1,length(did_twfe_b),by=6)){
+  etable(did_twfe_bn[i:(i+5)], tex = T, dict = myD,
+         group = list("Both $\\times$ Time FE"="Month"))
+  cat("\n")
+  plot(fixef(did_twfe_bn[[(i+5)]])[[2]], ylab = "", 
+       main = paste0("Month-Year FE : ",did_twfe_bn[[(i+5)]]$fml[2]), 
+     xaxt="n", xlab = "")
+  axis(1, at=seq(1,96,by=14),
+     labels = names(fixef(did_twfe_bn[[1]])[[2]][seq(1,96,by=14)]))
+  abline(v=15, col="blue", lty=2, lwd=3)
+}
+```
+
+# Just One as treatment, None as control
+
+```{r did_twfe_jn, results='asis', echo=FALSE}
+
+for (i in seq(1,length(did_twfe_b),by=6)){
+  etable(did_twfe_jn[i:(i+5)], tex = T, dict = myD,
+         group = list("Just one $\\times$ Time FE"="Month"))
+  cat("\n")
+  plot(fixef(did_twfe_jn[[(i+5)]])[[2]], ylab = "", 
+       main = paste0("Month-Year FE : ",did_twfe_jn[[(i+5)]]$fml[2]), 
+     xaxt="n", xlab = "")
+  axis(1, at=seq(1,96,by=14),
+     labels = names(fixef(did_twfe_jn[[1]])[[2]][seq(1,96,by=14)]))
+  abline(v=15, col="blue", lty=2, lwd=3)
+}
+```

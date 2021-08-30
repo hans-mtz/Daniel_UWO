@@ -1,54 +1,46 @@
-# Set up ----
-## Load libraries #####
-library(readr)
-library(lubridate)
-library(tidyverse)
 
-
-data_dir="/Volumes/SSD Hans/Dropbox/Dropbox hmarti33/Dropbox/Summer 2021/"
-
-## Reading data ----
+# Reading data ----
 data <- read_csv(paste0(data_dir,"SellDistMun.csv"))
 
 data$date <- ym(data$month) # transforming strings to dates
 data$month<- ym(data$month)
-## Reviewing data ----
-firms <- unique(data$dist_full_name) #All distributors
-mun <- unique(data$cod_mun) #All municipalities
+# Reviewing data ----
+# firms <- unique(data$dist_full_name) #All distributors
+# mun <- unique(data$cod_mun) #All municipalities
 
 # Reviewing data, checking distributors and their id's. Just to be safe
 # Cosan 40 and 172
-unique(data[grepl("C(osan|OSAN)", data$dist_full_name), "dist_id"])
+#unique(data[grepl("C(osan|OSAN)", data$dist_full_name), "dist_id"])
 # Alesat 7
-unique(data[grepl("ALESAT", data$dist_full_name),"dist_id"])
+# unique(data[grepl("ALESAT", data$dist_full_name),"dist_id"])
 # Shell 192 and 172
-unique(data[grepl("S(HELL|hell)", data$dist_full_name),"dist_id"])
+# unique(data[grepl("S(HELL|hell)", data$dist_full_name),"dist_id"])
 # BR is Petrobras  137
-unique(data[grepl("PETROBRAS", data$dist_full_name),"dist_id"])
+# unique(data[grepl("PETROBRAS", data$dist_full_name),"dist_id"])
 # Ipiranga -> DNP - Dist Nac de Pet 65 and 98
-unique(data[grepl("DNP", data$dist_full_name),"dist_id"])
+# unique(data[grepl("DNP", data$dist_full_name),"dist_id"])
 # Raizen (Cosan, Shell) 172
-data %>% filter(dist_id==172) %>%
-  select(dist_full_name) %>%
-  summarise(names=unique(dist_full_name))
+# data %>% filter(dist_id==172) %>%
+  # select(dist_full_name) %>%
+  # summarise(names=unique(dist_full_name))
 
 #Confirming : Raizen (172) appears March 2011.
 #           Cosan (40) and Shell (192) drop February 2011
 
-data %>% group_by(cod_mun) %>%
-  filter(dist_id==172) %>%
-  summarise(Raizen_appears_mun=min(date)) %>%
-  arrange(Raizen_appears_mun)
-
-data %>% group_by(cod_mun) %>%
-  filter(dist_id==40) %>%
-  summarise(Cosan_drops_mun=max(date)) %>%
-  arrange(desc(Cosan_drops_mun))
-
-data %>% group_by(cod_mun) %>%
-  filter(dist_id==192) %>%
-  summarise(Shell_drops_mun=max(date)) %>%
-  arrange(desc(Shell_drops_mun))
+# data %>% group_by(cod_mun) %>%
+#   filter(dist_id==172) %>%
+#   summarise(Raizen_appears_mun=min(date)) %>%
+#   arrange(Raizen_appears_mun)
+#
+# data %>% group_by(cod_mun) %>%
+#   filter(dist_id==40) %>%
+#   summarise(Cosan_drops_mun=max(date)) %>%
+#   arrange(desc(Cosan_drops_mun))
+#
+# data %>% group_by(cod_mun) %>%
+#   filter(dist_id==192) %>%
+#   summarise(Shell_drops_mun=max(date)) %>%
+#   arrange(desc(Shell_drops_mun))
 
 # Flaggin municipalities ----
 ## Both Shell and Cosan operating ----
@@ -92,19 +84,19 @@ m12 <- flag %>% arrange(cod_mun) %>%
   filter(twelve_before==1, two_before==1) %>%
   select(cod_mun, mun, Cosan, Shell, Other, Both, Just_one, None)
 
-# Exporting as csv "macintosh" can be converted to "UTF-8" if needed.
-# write.csv(m2, file = "m2.csv", fileEncoding = "macintosh")
-# write.csv(m6, file = "m6.csv", fileEncoding = "macintosh")
-# write.csv(m12, file = "m12.csv", fileEncoding = "macintosh")
+## Exporting as csv "macintosh" can be converted to "UTF-8" if needed. ----
+write.csv(m2, file = "m2.csv", fileEncoding = "macintosh")
+write.csv(m6, file = "m6.csv", fileEncoding = "macintosh")
+write.csv(m12, file = "m12.csv", fileEncoding = "macintosh")
 
 # Multimarket matrix ----
 
 ## Main dist ----
 #Getting main distributors after merge/ before merge: change filter to "date<merge"
-data %>% group_by(dist_id, dist_full_name) %>%
-  filter(date>=merge) %>%
-  summarise(total=sum(vol)) %>%
-  arrange(desc(total))# %>%
+# data %>% group_by(dist_id, dist_full_name) %>%
+#   filter(date>=merge) %>%
+#   summarise(total=sum(vol)) %>%
+#   arrange(desc(total))# %>%
 
 ## Getting matrices ----
 #Transforming data to create dummies for distributor
@@ -191,14 +183,19 @@ for(k in 1:ncol(sel_m)){
   mmc_lc[[sample[k]]]=A
 }
 
-# # Saving to csv files ----
-# mapply(function(x,y)write.csv(x,file=paste0(y,".csv")),mmc_l, sample)
-#
-# mapply(function(x,y)
-#   write.csv(x,file=paste0(y,"_count.csv")),
-#   mmc_lc, sample)
-#
-# mapply(function(x,y)
-#   write.csv(x,file=paste0(results_dit,y,"_count.csv")),
-#   mmc_lc, sample)
+## Saving to csv files ----
+mapply(function(x,y)
+  write.csv(x,file=here::here("Output",paste0(y,".csv"))),
+  mmc_l, sample)
 
+mapply(function(x,y)
+  write.csv(x,file=here::here("Output",paste0(y,".csv"))),
+  mmc_lc, sample)
+
+mapply(function(x,y)
+  write.csv(x,file=here::here("Output",paste0(y,".csv"))),
+  mmc_lc, sample)
+
+# Cleaning ----
+rm(list = grep("merge|before|data",ls(), value = T, invert = T))
+# Leaving only: data, merge, *_before
