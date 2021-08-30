@@ -1,12 +1,15 @@
 # Main ----
 
 ## Load libraries #####
-library(readr)
-library(lubridate)
-library(tidyverse)
-library(fixest)
-library(here)
-library(rmarkdown)
+library(groundhog)
+gd="2021-08-30"
+pkgs=c("readr",
+"lubridate",
+"tidyverse",
+"fixest",
+"here",
+"rmarkdown")
+groundhog.library(pkgs, gd)
 
 ## Set up data directory ----
 
