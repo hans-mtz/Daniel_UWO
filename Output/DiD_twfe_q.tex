@@ -1,0 +1,176 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+  \usepackage{amssymb}
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={DiD TWFE-Q},
+  pdfauthor={Hans Martinez},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{tabularx, booktabs, footnote, bbm, bm}
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{DiD TWFE-Q}
+\author{Hans Martinez}
+\date{31 Aug, 2021}
+
+\begin{document}
+\maketitle
+
+\hypertarget{diff-in-diff-two-way-fixed-effects-twfe}{%
+\section{Diff-in-Diff two way fixed effects
+(TWFE)}\label{diff-in-diff-two-way-fixed-effects-twfe}}
+
+\begin{equation}
+  Y_{it}=\bm{\beta'}_{t}(Treatment_{it}*\bm{Month}_{t}) + \alpha X_{it} + \gamma^{Mun}_{i} + \gamma^{Qt}_{t}  + \varepsilon_{it}
+\end{equation}
+
+where \(i\) stands for municipality and \(t\) for month. \(Y_{it}\) is
+one of the outcome variables of interest. \(Treatment_{it}\) is a dummy
+variable equal to one if the municipality is in the treatment group and
+zero if it is in the control group. \(Month_{t}\) is a vector of the
+month-year period dummy variables (96 month-year periods).
+\(\gamma^{Mun}_{i}\) and \(\gamma^{Qt}_{t}\) are municipality and
+month-year fixed effects, respectively. Finally, \(X_{it}\) is a vector
+of control variables.
+
+The graphs below show only the interaction between the \emph{Month} and
+the \emph{Treatment} variables.
+
+\hypertarget{both-as-treatment-just-one-and-none-as-control}{%
+\section{Both as treatment, Just One and None as
+control}\label{both-as-treatment-just-one-and-none-as-control}}
+
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe-1.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe-2.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe-3.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe-4.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe-5.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe-6.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe-7.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe-8.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe-9.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe-10.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe-11.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe-12.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe-13.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe-14.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe-15.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe-16.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe-17.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe-18.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe-19.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe-20.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe-21.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe-22.pdf}
+
+\hypertarget{both-as-treatment-none-as-control}{%
+\section{Both as treatment, None as
+control}\label{both-as-treatment-none-as-control}}
+
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_bn-1.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_bn-2.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_bn-3.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_bn-4.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_bn-5.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_bn-6.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_bn-7.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_bn-8.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_bn-9.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_bn-10.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_bn-11.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_bn-12.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_bn-13.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_bn-14.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_bn-15.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_bn-16.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_bn-17.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_bn-18.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_bn-19.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_bn-20.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_bn-21.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_bn-22.pdf}
+
+\hypertarget{just-one-as-treatment-none-as-control}{%
+\section{Just One as treatment, None as
+control}\label{just-one-as-treatment-none-as-control}}
+
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_jn-1.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_jn-2.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_jn-3.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_jn-4.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_jn-5.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_jn-6.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_jn-7.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_jn-8.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_jn-9.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_jn-10.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_jn-11.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_jn-12.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_jn-13.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_jn-14.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_jn-15.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_jn-16.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_jn-17.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_jn-18.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_jn-19.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_jn-20.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_jn-21.pdf}
+\includegraphics{/Volumes/SSD Hans/Github/Daniel_UWO/Output/DiD_twfe_q_files/figure-latex/did_twfe_q_jn-22.pdf}
+
+\end{document}

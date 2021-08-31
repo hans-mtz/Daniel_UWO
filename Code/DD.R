@@ -170,7 +170,7 @@ did_twfe_b <- list()
 did_twfe_bn <- list()
 did_twfe_jn <- list()
 k=1
-for (i in 17:length(outc)) {
+for (i in 1:length(outc)) {
   for (j in 1:length(x1)){
     did_twfe_b[[k]] <- feols(xpd(y~..x| mun+month,..x=x1[1:j], lhs=outc[i]),
                              df)
@@ -188,8 +188,8 @@ rm(did_twfe_b,did_twfe_bn,did_twfe_jn)
 
 ## TWFE plots ----
 
-x1 <- c("i(month, Both, '2011-02-01')","Fleet_tot","population","gdp_pc","hhi")
-x2 <- c("i(month, Just_one, '2011-02-01')","Fleet_tot","population","gdp_pc","hhi")
+x1 <- c("i(month, Both, '2011-02-01')","Fleet_tot","population","i(group, merge, keep='Both')","gdp_pc","hhi")
+x2 <- c("i(month, Just_one, '2011-02-01')","i(group, merge, keep='Just_one')","Fleet_tot","population","gdp_pc","hhi")
 
 did_twfe_q_b <- list()
 did_twfe_q_bn <- list()
@@ -214,8 +214,10 @@ rm(did_twfe_q_b,did_twfe_q_bn,did_twfe_q_jn)
 # Fake merge data
 df <- df %>% mutate(placebo=if_else(month<"2010-11-01",0,1))
 
-x1 <- c("i(group, placebo, keep='Both')","Fleet_tot","population","gdp_pc","hhi")
-x2 <- c("i(group, placebo, keep='Just_one')","Fleet_tot","population","gdp_pc","hhi")
+x1 <- c("i(group, placebo, keep='Both')","Fleet_tot","population","gdp_pc",
+        "hhi","i(month, Both, '2011-02-01')")
+x2 <- c("i(group, placebo, keep='Just_one')","Fleet_tot","population","gdp_pc",
+        "hhi","i(month, Both, '2011-02-01')")
 
 did_pbo_b <- list()
 did_pbo_bn <- list()

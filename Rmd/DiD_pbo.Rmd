@@ -60,8 +60,9 @@ Sample is restricted until the date of the merger.
 ### Both as treatment, Just One and None as control
 
 ```{r did, results='asis', echo=FALSE}
-for (i in seq(1,length(did_pbo_b),by=5)){
-  etable(did_pbo_b[i:(i+4)], tex = T, dict = myD)
+for (i in seq(1,length(did_pbo_b),by=6)){
+  etable(did_pbo_b[i:(i+5)], tex = T, dict = myD, 
+         group = list("Both $\\times$ Time FE"="Month"))
   cat("\n")
 }
 ```
@@ -69,8 +70,9 @@ for (i in seq(1,length(did_pbo_b),by=5)){
 # Both as treatment, None as control
 
 ```{r did_pbo_bn, results='asis', echo=FALSE}
-for (i in seq(1,length(did_pbo_bn),by=5)){
-  etable(did_pbo_bn[i:(i+4)], tex = T, dict = myD)
+for (i in seq(1,length(did_pbo_bn),by=6)){
+  etable(did_pbo_bn[i:(i+5)], tex = T, dict = myD, 
+         group = list("Both $\\times$ Time FE"="Month"))
   cat("\n")
 }
 ```
@@ -78,8 +80,9 @@ for (i in seq(1,length(did_pbo_bn),by=5)){
 # Just One as treatment, None as control
 
 ```{r did_pbo_jn, results='asis', echo=FALSE}
-for (i in seq(1,length(did_pbo_b),by=5)){
-  etable(did_pbo_jn[i:(i+4)], tex = T, dict = myD)
+for (i in seq(1,length(did_pbo_b),by=6)){
+  etable(did_pbo_jn[i:(i+5)], tex = T, dict = myD,
+         group = list("Just one $\\times$ Time FE"="Month"))
   cat("\n")
 }
 ```
