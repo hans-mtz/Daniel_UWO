@@ -21,7 +21,7 @@ library(rmarkdown)
 
 ## Set up data directory ----
 
-data_dir="/Volumes/SSD Hans/Dropbox/Dropbox hmarti33/Dropbox/Summer 2021/"
+data_dir="~/Dropbox/Summer 2021/"
 
 # Flagging municipalities and Multimarket matrices ----
 
